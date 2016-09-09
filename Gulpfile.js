@@ -74,7 +74,7 @@ gulp.task('deploy:favicon', function () {
     return gulp.src(paths.favicon).pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('default', ['deploy:css', 'deploy:javascript', 'deploy:favicon', 'compileNew', 'deploy:vendor', 'deploy:html']);
+gulp.task('default', ['deploy:css', 'deploy:javascript', 'deploy:favicon', 'compile', 'deploy:vendor', 'deploy:html']);
 
 gulp.task('defaultwatch', ['default'], function () {
     gulp.watch(paths.scripts, ['compile']);
