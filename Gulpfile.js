@@ -4,7 +4,7 @@ var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var pump = require('pump');
 
-var paths = {
+var gulpPaths = {
     html: 'src/**/*.html',
     css: 'src/**/*.css',
     javascript: 'src/**/*.js',
