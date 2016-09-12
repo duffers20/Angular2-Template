@@ -11,6 +11,6 @@ export class AppComponent implements OnInit {
     message: string;
 
     ngOnInit() {
-        this.message = 'Hello, World!!!';
+        this.message = 'Hello, World.'; // Happy now ??!!
     }
 }
