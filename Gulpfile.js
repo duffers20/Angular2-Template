@@ -3,6 +3,7 @@ var typescript = require('gulp-typescript');
 var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var pump = require('pump');
+var inject = require('gulp-inject');
 
 var sources = [
     'src/**/*.html',
@@ -21,6 +22,13 @@ var vendors = [
     'node_modules/es6-shim/es6-shim.js',
 ]
 
+var polyfills = [
+    './dist/vendor/es6-shim/es6-shim.js',
+    './dist/vendor/reflect-metadata/Reflect.js',
+    './dist/vendor/systemjs/dist/system.src.js',
+    './dist/vendor/zone.js/dist/zone.js'
+]
+
 var paths = {
     'typescript': 'src/**/*.ts',
     'dest': 'dist'
@@ -36,17 +44,28 @@ gulp.task('compile', function () {
     ]);
 });
 
-gulp.task('deploy:app', ['compile'], function() {
-    return gulp.src(sources, {base: 'src/'})
+gulp.task('deploy:app', ['compile'], function () {
+    return gulp.src(sources, { base: 'src/' })
         .pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('deploy:vendors', function() {
-    return gulp.src(vendors, {base: 'node_modules/'})
+gulp.task('deploy:vendors', function () {
+    return gulp.src(vendors, { base: 'node_modules/' })
         .pipe(gulp.dest(paths.dest + '/vendor'));
 });
 
-gulp.task('default', ['deploy:vendors', 'deploy:app']);
+gulp.task('inject:polyfills', ['deploy:vendors'], function() {
+    var sources = gulp.src(polyfills, {
+        read: false
+    });
+    var target = gulp.src(paths.dest + '/index.html');
+    return target.pipe(inject(sources, {
+        ignorePath: 'dist',
+        addRootSlash: false
+    })).pipe(gulp.dest(paths.dest));
+})
+
+gulp.task('default', ['deploy:app', 'inject:polyfills']);
 
 gulp.task('watch', ['default'], function () {
     gulp.watch(paths.typescript, ['compile', 'deploy:app']);
