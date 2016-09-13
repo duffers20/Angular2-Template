@@ -12,6 +12,11 @@ var sources = [
     'src/favicon.ico'
 ];
 
+var paths = {
+    'typescript': 'src/**/*.ts',
+    'dest': 'dist'
+}
+
 var vendors = [
     'node_modules/rxjs/**/*.+(js|js.map)',
     'node_modules/systemjs/dist/system-polyfills.js',
@@ -27,20 +32,15 @@ var vendors = [
 ]
 
 var injects = [
-    './dist/vendor/es6-shim/es6-shim.js',
-    './dist/vendor/reflect-metadata/Reflect.js',
-    './dist/vendor/systemjs/dist/system.src.js',
-    './dist/vendor/zone.js/dist/zone.js',
-    './dist/vendor/jquery/dist/jquery.min.js',
-    './dist/vendor/bootstrap/dist/js/bootstrap.min.js',
-    './dist/vendor/bootstrap/dist/css/bootstrap.min.css',
-    './dist/vendor/font-awesome/css/font-awesome.min.css'
+    paths.dest + '/vendor/es6-shim/es6-shim.js',
+    paths.dest + '/vendor/reflect-metadata/Reflect.js',
+    paths.dest + '/vendor/systemjs/dist/system.src.js',
+    paths.dest + '/vendor/zone.js/dist/zone.js',
+    paths.dest + '/vendor/jquery/dist/jquery.min.js',
+    paths.dest + '/vendor/bootstrap/dist/js/bootstrap.min.js',
+    paths.dest + '/vendor/bootstrap/dist/css/bootstrap.min.css',
+    paths.dest + '/vendor/font-awesome/css/font-awesome.min.css'
 ]
-
-var paths = {
-    'typescript': 'src/**/*.ts',
-    'dest': 'dist'
-}
 
 gulp.task('compile', function () {
     var tsProject = typescript.createProject('src/tsconfig.json');
