@@ -20,13 +20,21 @@ var vendors = [
     'node_modules/reflect-metadata/**/*.+(ts|js|js.map)',
     'node_modules/@angular/**/*.+(js|js.map)',
     'node_modules/es6-shim/es6-shim.js',
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css'
 ]
 
-var polyfills = [
+var injects = [
     './dist/vendor/es6-shim/es6-shim.js',
     './dist/vendor/reflect-metadata/Reflect.js',
     './dist/vendor/systemjs/dist/system.src.js',
-    './dist/vendor/zone.js/dist/zone.js'
+    './dist/vendor/zone.js/dist/zone.js',
+    './dist/vendor/jquery/dist/jquery.min.js',
+    './dist/vendor/bootstrap/dist/js/bootstrap.min.js',
+    './dist/vendor/bootstrap/dist/css/bootstrap.min.css',
+    './dist/vendor/font-awesome/css/font-awesome.min.css'
 ]
 
 var paths = {
@@ -54,8 +62,8 @@ gulp.task('deploy:vendors', function () {
         .pipe(gulp.dest(paths.dest + '/vendor'));
 });
 
-gulp.task('inject:polyfills', ['deploy:vendors'], function() {
-    var sources = gulp.src(polyfills, {
+gulp.task('inject:dependencies', ['deploy:vendors'], function() {
+    var sources = gulp.src(injects, {
         read: false
     });
     var target = gulp.src(paths.dest + '/index.html');
@@ -65,7 +73,7 @@ gulp.task('inject:polyfills', ['deploy:vendors'], function() {
     })).pipe(gulp.dest(paths.dest));
 })
 
-gulp.task('default', ['deploy:app', 'inject:polyfills']);
+gulp.task('default', ['deploy:app', 'inject:dependencies']);
 
 gulp.task('watch', ['default'], function () {
     gulp.watch(paths.typescript, ['compile', 'deploy:app']);
