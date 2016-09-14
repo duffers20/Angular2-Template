@@ -12,6 +12,11 @@ var sources = [
     'src/favicon.ico'
 ];
 
+var paths = {
+    'typescript': 'src/**/*.ts',
+    'dest': 'dist'
+}
+
 var vendors = [
     'node_modules/rxjs/**/*.+(js|js.map)',
     'node_modules/systemjs/dist/system-polyfills.js',
@@ -20,19 +25,22 @@ var vendors = [
     'node_modules/reflect-metadata/**/*.+(ts|js|js.map)',
     'node_modules/@angular/**/*.+(js|js.map)',
     'node_modules/es6-shim/es6-shim.js',
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css'
 ]
 
-var polyfills = [
-    './dist/vendor/es6-shim/es6-shim.js',
-    './dist/vendor/reflect-metadata/Reflect.js',
-    './dist/vendor/systemjs/dist/system.src.js',
-    './dist/vendor/zone.js/dist/zone.js'
+var injects = [
+    paths.dest + '/vendor/es6-shim/es6-shim.js',
+    paths.dest + '/vendor/reflect-metadata/Reflect.js',
+    paths.dest + '/vendor/systemjs/dist/system.src.js',
+    paths.dest + '/vendor/zone.js/dist/zone.js',
+    paths.dest + '/vendor/jquery/dist/jquery.min.js',
+    paths.dest + '/vendor/bootstrap/dist/js/bootstrap.min.js',
+    paths.dest + '/vendor/bootstrap/dist/css/bootstrap.min.css',
+    paths.dest + '/vendor/font-awesome/css/font-awesome.min.css'
 ]
-
-var paths = {
-    'typescript': 'src/**/*.ts',
-    'dest': 'dist'
-}
 
 gulp.task('compile', function () {
     var tsProject = typescript.createProject('src/tsconfig.json');
@@ -54,8 +62,8 @@ gulp.task('deploy:vendors', function () {
         .pipe(gulp.dest(paths.dest + '/vendor'));
 });
 
-gulp.task('inject:polyfills', ['deploy:vendors'], function() {
-    var sources = gulp.src(polyfills, {
+gulp.task('inject:dependencies', ['deploy:vendors'], function() {
+    var sources = gulp.src(injects, {
         read: false
     });
     var target = gulp.src(paths.dest + '/index.html');
@@ -65,7 +73,7 @@ gulp.task('inject:polyfills', ['deploy:vendors'], function() {
     })).pipe(gulp.dest(paths.dest));
 })
 
-gulp.task('default', ['deploy:app', 'inject:polyfills']);
+gulp.task('default', ['deploy:app', 'inject:dependencies']);
 
 gulp.task('watch', ['default'], function () {
     gulp.watch(paths.typescript, ['compile', 'deploy:app']);
