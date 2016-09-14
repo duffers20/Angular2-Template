@@ -24,7 +24,7 @@ var vendors = [
     'node_modules/zone.js/dist/**/*.+(js|js.map)',
     'node_modules/reflect-metadata/**/*.+(ts|js|js.map)',
     'node_modules/@angular/**/*.+(js|js.map)',
-    'node_modules/es6-shim/es6-shim.js',
+    'node_modules/es6-shim/es6-shim.min.js',
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -32,7 +32,7 @@ var vendors = [
 ]
 
 var injects = [
-    paths.dest + '/vendor/es6-shim/es6-shim.js',
+    paths.dest + '/vendor/es6-shim/es6-shim.min.js',
     paths.dest + '/vendor/reflect-metadata/Reflect.js',
     paths.dest + '/vendor/systemjs/dist/system.src.js',
     paths.dest + '/vendor/zone.js/dist/zone.js',
