@@ -28,12 +28,13 @@ var vendors = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/font-awesome/css/font-awesome.min.css'
+    'node_modules/font-awesome/css/font-awesome.min.css',
+    'node_modules/core-js/client/shim.min.js'
 ]
 
 var injects = [
-    paths.dest + '/vendor/es6-shim/es6-shim.min.js',
     paths.dest + '/vendor/reflect-metadata/Reflect.js',
+    paths.dest + '/vendor/core-js/client/shim.min.js',
     paths.dest + '/vendor/systemjs/dist/system.src.js',
     paths.dest + '/vendor/zone.js/dist/zone.js',
     paths.dest + '/vendor/jquery/dist/jquery.min.js',
