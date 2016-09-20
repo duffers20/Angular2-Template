@@ -15,7 +15,7 @@ var sources = [
 var paths = {
     'typescript': 'src/**/*.ts',
     'dest': 'dist'
-}
+};
 
 var vendors = [
     'node_modules/rxjs/**/*.+(js|js.map)',
@@ -28,9 +28,10 @@ var vendors = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'node_modules/bootstrap/dist/fonts/**/*.*',
     'node_modules/font-awesome/css/font-awesome.min.css',
     'node_modules/core-js/client/shim.min.js'
-]
+];
 
 var injects = [
     paths.dest + '/vendor/reflect-metadata/Reflect.js',
@@ -41,7 +42,7 @@ var injects = [
     paths.dest + '/vendor/bootstrap/dist/js/bootstrap.min.js',
     paths.dest + '/vendor/bootstrap/dist/css/bootstrap.min.css',
     paths.dest + '/vendor/font-awesome/css/font-awesome.min.css'
-]
+];
 
 gulp.task('compile', function () {
     var tsProject = typescript.createProject('src/tsconfig.json');
