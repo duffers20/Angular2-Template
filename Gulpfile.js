@@ -2,8 +2,8 @@
 var typescript = require('gulp-typescript');
 var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
-var pump = require('pump');
 var inject = require('gulp-inject');
+var sourcemaps = require('gulp-sourcemaps');
 
 var sources = [
     'src/**/*.html',
@@ -45,12 +45,12 @@ var injects = [
 
 gulp.task('compile', function () {
     var tsProject = typescript.createProject('src/tsconfig.json');
-    pump([
-        gulp.src(paths.typescript),
-        typescript(tsProject),
-        uglify(),
-        gulp.dest(paths.dest)
-    ]);
+    return gulp.src(paths.typescript)
+        .pipe(sourcemaps.init())
+        .pipe(typescript(tsProject))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(paths.dest));
 });
 
 gulp.task('deploy:app', ['compile'], function () {
