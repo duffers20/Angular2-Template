@@ -9,7 +9,7 @@
 
     paths      = {'src' : 'src',
                   'dest': 'dist',
-                  'app': 'src/app'},
+                  'app' : 'src/app'},
 
     tsFiles    = paths.src + '/**/*.ts',
     
