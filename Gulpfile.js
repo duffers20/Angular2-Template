@@ -7,14 +7,18 @@
     del        = require('del'),
     runSeq     = require('run-sequence'),
 
-    tsFiles    = 'src/**/*.ts',
-    
-    rootFiles  = ['src/*.html', 
-                  'src/*.ico', 
-                  'src/*.js'],
+    paths      = {'src' : 'src',
+                  'dest': 'dist',
+                  'app': 'src/app'},
 
-    appFiles   = ['src/app/**/*.html',
-                  'src/app/**/*.css'],
+    tsFiles    = paths.src + '/**/*.ts',
+    
+    rootFiles  = [paths.src + '/*.html', 
+                  paths.src + '/*.ico', 
+                  paths.src + '/*.js'],
+
+    appFiles   = [paths.app + '/**/*.html',
+                  paths.app + '/**/*.css'],
 
     vendors    = ['node_modules/rxjs/**/*.+(js|js.map)',
                   'node_modules/systemjs/dist/system-polyfills.js',
@@ -30,54 +34,54 @@
                   'node_modules/font-awesome/css/font-awesome.min.css',
                   'node_modules/core-js/client/shim.min.js'],
                  
-    injects    = ['dist/vendor/reflect-metadata/Reflect.js',
-                  'dist/vendor/core-js/client/shim.min.js',
-                  'dist/vendor/systemjs/dist/system.src.js',
-                  'dist/vendor/zone.js/dist/zone.js',
-                  'dist/vendor/jquery/dist/jquery.min.js',
-                  'dist/vendor/bootstrap/dist/js/bootstrap.min.js',
-                  'dist/vendor/bootstrap/dist/css/bootstrap.min.css',
-                  'dist/vendor/font-awesome/css/font-awesome.min.css'];
+    injects    = [paths.dest + '/vendor/reflect-metadata/Reflect.js',
+                  paths.dest + '/vendor/core-js/client/shim.min.js',
+                  paths.dest + '/vendor/systemjs/dist/system.src.js',
+                  paths.dest + '/vendor/zone.js/dist/zone.js',
+                  paths.dest + '/vendor/jquery/dist/jquery.min.js',
+                  paths.dest + '/vendor/bootstrap/dist/js/bootstrap.min.js',
+                  paths.dest + '/vendor/bootstrap/dist/css/bootstrap.min.css',
+                  paths.dest + '/vendor/font-awesome/css/font-awesome.min.css'];
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('clean', function () {
-    return del(['dist/**']);
+    return del([paths.dest + '/**']);
 });
 
 gulp.task('copy-root', function () {
     return gulp.src(rootFiles)
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(paths.dest));
 });
 
 gulp.task('copy-vendor', function () {
     return gulp.src(vendors, { base: 'node_modules/' })
-        .pipe(gulp.dest('dist/vendor'));
+        .pipe(gulp.dest( paths.dest + '/vendor'));
 });
 
 gulp.task('inject', function () {
     var sources = gulp.src(injects, {
         read: false
     });
-    var target = gulp.src('dist/index.html');
+    var target = gulp.src(paths.dest + '/index.html');
     return target.pipe(inject(sources, {
-        ignorePath: 'dist',
+        ignorePath: paths.dest,
         addRootSlash: false
-    })).pipe(gulp.dest('dist'));
+    })).pipe(gulp.dest(paths.dest));
 })
 
 gulp.task('compile', function () {
-    var tsProject = typescript.createProject('src/tsconfig.json');
+    var tsProject = typescript.createProject(paths.src + '/tsconfig.json');
     return gulp.src(tsFiles)
         .pipe(sourcemaps.init())
         .pipe(typescript(tsProject))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(paths.dest));
 });
 
 gulp.task('copy-app', function () {
-    return gulp.src(appFiles, { base: 'src/' })
-        .pipe(gulp.dest('dist'));
+    return gulp.src(appFiles, { base: paths.src + '/' })
+        .pipe(gulp.dest(paths.dest));
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,6 +98,6 @@ gulp.task('default', function () {
 });
 
 gulp.task('watch', ['default'], function () {
-    gulp.watch('src/app/**/*.ts', ['compile']);
-    gulp.watch('src/app/**/*.+(html|css)', ['copy-app']);
+    gulp.watch(paths.app + '/**/*.ts', ['compile']);
+    gulp.watch(paths.app + '/**/*.+(html|css)', ['copy-app']);
 });
