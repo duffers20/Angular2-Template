@@ -4,6 +4,7 @@
     typescript = require('gulp-typescript'),
     sourcemaps = require('gulp-sourcemaps'),
     watch      = require('gulp-watch'),
+    tslint     = require('gulp-tslint'),
     del        = require('del'),
     runSeq     = require('run-sequence'),
 
@@ -73,6 +74,12 @@ gulp.task('inject', function () {
 gulp.task('compile', function () {
     var tsProject = typescript.createProject(paths.src + '/tsconfig.json');
     return gulp.src(tsFiles)
+        .pipe(tslint({
+            formatter: 'prose'
+        }))
+        .pipe(tslint.report({
+            emitError: false
+        }))
         .pipe(sourcemaps.init())
         .pipe(typescript(tsProject))
         .pipe(sourcemaps.write('.'))
