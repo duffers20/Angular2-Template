@@ -13,11 +13,11 @@ export class VoterComponent {
 
     UpVote() {
         if (this.myVote === 1) { return; };
-            this.myVote++;
+        this.myVote++;
     }
 
     DownVote() {
         if (this.myVote === -1) { return; };
-            this.myVote--;
+        this.myVote--;
     }
 }

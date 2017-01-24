@@ -42,7 +42,9 @@
                   paths.dest + '/vendor/jquery/dist/jquery.min.js',
                   paths.dest + '/vendor/bootstrap/dist/js/bootstrap.min.js',
                   paths.dest + '/vendor/bootstrap/dist/css/bootstrap.min.css',
-                  paths.dest + '/vendor/font-awesome/css/font-awesome.min.css'];
+                  paths.dest + '/vendor/font-awesome/css/font-awesome.min.css']
+                  
+    tsProject  =  typescript.createProject(paths.src + '/tsconfig.json', { outDir: paths.dest });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -72,7 +74,6 @@ gulp.task('inject', function () {
 })
 
 gulp.task('compile', function () {
-    var tsProject = typescript.createProject(paths.src + '/tsconfig.json');
     return gulp.src(tsFiles)
         .pipe(tslint({
             formatter: 'prose'
@@ -81,7 +82,7 @@ gulp.task('compile', function () {
             emitError: false
         }))
         .pipe(sourcemaps.init())
-        .pipe(typescript(tsProject))
+        .pipe(tsProject())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.dest));
 });
