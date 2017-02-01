@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+
+    ng2-templates:
+        build:
+            context: .
+            dockerfile: Dockerfile
+
+        ports:
+            - "3474:80"
