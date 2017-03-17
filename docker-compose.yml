@@ -6,6 +6,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        volumes:
+            - ./dist:/usr/share/nginx/html
 
         ports:
             - "3474:80"

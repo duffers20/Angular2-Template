@@ -4,7 +4,7 @@ Basic Angular 2 Application Template, which includes npm commands to assist with
 
 ## Note
 
-This is a basic application template, which is very much a work in progress. 
+This is a basic application template, which is very much a work in progress.
 
 ## Included Frameworks
 
@@ -25,3 +25,8 @@ The following commands are available:
 * **npm run build** - runs the gulp default task.
 * **npm run serve** - serves the /dist folder, using lite-server (bs-config.json can be modified to specify different port numbers etc).
 * **npm run buildserve** - runs the above two commands, to build and serve the application.
+
+To run the application as a docker container (after having installed docker locally)
+* `docker-compose build`
+* `docker-compose up`
+* Navigate to http://localhost:3474/
